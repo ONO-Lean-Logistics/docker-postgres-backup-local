@@ -79,18 +79,19 @@ for DB in ${POSTGRES_DBS}; do
   fi
   #Copy (hardlink) for each entry
   if [ -d "${DFILE}" ]; then
-    WFILENEW="${WFILE}-new"
-    MFILENEW="${MFILE}-new"
-    rm -rf "${WFILENEW}" "${MFILENEW}"
-    mkdir "${WFILENEW}" "${MFILENEW}"
-    ln -f "${DFILE}/"* "${WFILENEW}/"
-    ln -f "${DFILE}/"* "${MFILENEW}/"
-    rm -rf "${WFILE}" "${MFILE}"
-    mv -v "${WFILENEW}" "${WFILE}"
-    mv -v "${MFILENEW}" "${MFILE}"
+    if [ ! -e "${WFILE}" ]; then
+      cp -r "${DFILE}" "${WFILE}"
+    fi
+    if [ ! -e "${MFILE}" ]; then
+      cp -r "${DFILE}" "${MFILE}"
+    fi
   else
-    ln -vf "${DFILE}" "${WFILE}"
-    ln -vf "${DFILE}" "${MFILE}"
+    if [ ! -e "${WFILE}" ]; then
+      ln -v "${DFILE}" "${WFILE}"
+    fi
+    if [ ! -e "${MFILE}" ]; then
+      ln -v "${DFILE}" "${MFILE}"
+    fi
   fi
 
   #Clean old files
