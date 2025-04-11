@@ -32,6 +32,7 @@ ENV POSTGRES_DB="**None**" \
     HEALTHCHECK_PORT=8080
 
 COPY backup.sh /backup.sh
+RUN chmod +x /backup.sh
 
 VOLUME /backups
 

@@ -56,6 +56,7 @@ ENV POSTGRES_DB="**None**" \
 
 # Copy backup script
 COPY backup.sh /backup.sh
+RUN sed -i 's/\r$//' /backup.sh && chmod +x /backup.sh
 
 # Define volume for backups
 VOLUME /backups
